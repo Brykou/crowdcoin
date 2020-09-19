@@ -1,5 +1,9 @@
 {
-  "extends": ["@binance-academy/eslint-config-bnb"],
+  "extends": ["@binance-academy/eslint-config-bnb", "plugin:mocha/recommended"],
+  "env": {
+    "es6": true,
+    "mocha": true
+  },
   "rules": {
     "jsx-a11y/anchor-is-valid": [
       "error",
@@ -8,6 +12,7 @@
         "specialLink": [],
         "aspects": ["invalidHref", "preferButton"]
       }
-    ]
+    ],
+    "mocha/no-mocha-arrows": 0
   }
 }

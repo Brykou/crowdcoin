@@ -6,30 +6,30 @@ const compiledCampaign = require("../ethereum/build/Campaign.json");
 
 const web3 = new Web3(ganache.provider());
 
-let accounts = null;
-let factory = null;
-let campaign = null;
+describe("[Contract] Campaign.sol", () => {
+  let accounts = null;
+  let factory = null;
+  let campaign = null;
 
-beforeEach(async () => {
-  const _accounts = await web3.eth.getAccounts();
-  accounts = {
-    MANAGER: _accounts[0],
-    CONTRIBUTOR1: _accounts[1],
-    CONTRIBUTOR2: _accounts[2],
-    RECIPIENT: _accounts[3],
-  };
+  beforeEach(async () => {
+    const acc = await web3.eth.getAccounts();
+    accounts = {
+      MANAGER: acc[0],
+      CONTRIBUTOR1: acc[1],
+      CONTRIBUTOR2: acc[2],
+      RECIPIENT: acc[3],
+    };
 
-  factory = await new web3.eth.Contract(compiledFactory.abi)
-    .deploy({ data: compiledFactory.evm.bytecode.object })
-    .send({ from: accounts.MANAGER, gas: 1000000 });
+    factory = await new web3.eth.Contract(compiledFactory.abi)
+      .deploy({ data: compiledFactory.evm.bytecode.object })
+      .send({ from: accounts.MANAGER, gas: 1000000 });
 
-  await factory.methods.createCampaign("100").send({ from: accounts.MANAGER, gas: 1000000 });
-  const [campaignAddress] = await factory.methods.getCampaigns().call();
+    await factory.methods.createCampaign("100").send({ from: accounts.MANAGER, gas: 1000000 });
+    const [campaignAddress] = await factory.methods.getCampaigns().call();
 
-  campaign = await new web3.eth.Contract(compiledCampaign.abi, campaignAddress);
-});
+    campaign = await new web3.eth.Contract(compiledCampaign.abi, campaignAddress);
+  });
 
-describe("Campaign", () => {
   it("deploys a factory and a campaign", () => {
     assert(factory.options.address);
     assert(campaign.options.address);
