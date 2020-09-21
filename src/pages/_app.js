@@ -1,13 +1,16 @@
 import React from "react";
 import PropTypes from "prop-types";
 import Layout from "../components/Layout";
+import { NotificationProvider } from "../util/notification";
 import "semantic-ui-css/semantic.min.css";
 
 const CustomApp = ({ Component, pageProps }) => {
   return (
-    <Layout>
-      <Component {...pageProps} />
-    </Layout>
+    <NotificationProvider>
+      <Layout>
+        <Component {...pageProps} />
+      </Layout>
+    </NotificationProvider>
   );
 };
 CustomApp.propTypes = {

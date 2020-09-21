@@ -1,18 +1,19 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { Form, Input, Button, Message } from "semantic-ui-react";
+import { Form, Input, Button } from "semantic-ui-react";
 import web3 from "../util/web3";
 import getCampaign from "../util/campaign";
+import useNotification from "../util/notification";
 
 const Contribute = ({ address }) => {
   const [contribution, setContribution] = useState("0");
-  const [message, setMessage] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const { setError, dismissNotification } = useNotification();
 
   const onSubmit = async (event) => {
     event.preventDefault();
     setIsLoading(true);
-    setMessage(null);
+    dismissNotification();
 
     try {
       const campaign = getCampaign(address);
@@ -20,7 +21,7 @@ const Contribute = ({ address }) => {
       await campaign.methods.contribute().send({ from: accounts[0], value: web3.utils.toWei(contribution, "ether") });
       window.location.reload();
     } catch (err) {
-      setMessage({ header: "Oops", content: err.message, negative: true });
+      setError(err.message);
     }
     setIsLoading(false);
   };
@@ -41,7 +42,6 @@ const Contribute = ({ address }) => {
       <Button primary type="submit" disabled={isLoading} loading={isLoading}>
         Contribute
       </Button>
-      {message && <Message {...message} />}
     </Form>
   );
 };

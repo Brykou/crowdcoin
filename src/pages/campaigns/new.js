@@ -1,30 +1,27 @@
 import React, { useState } from "react";
-import { Form, Header, Input, Button, Message } from "semantic-ui-react";
+import { Form, Header, Input, Button } from "semantic-ui-react";
 import { useRouter } from "next/router";
 import factory from "../../util/factory";
 import web3 from "../../util/web3";
+import useNotification from "../../util/notification";
 
 const New = () => {
   const [minContribution, setMinContribution] = useState("100");
-  const [message, setMessage] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const { setInfo, setError, dismissNotification } = useNotification();
   const router = useRouter();
 
   const onSubmit = async (event) => {
     event.preventDefault();
     setIsLoading(true);
-    setMessage(null);
+    dismissNotification();
     try {
       const accounts = await web3.eth.getAccounts();
-      setMessage({
-        header: "Info",
-        content: "You will be redirected after the transaction has been completed (~20 sec).",
-        info: true,
-      });
+      setInfo("You will be redirected after the transaction has been completed (~20 sec).");
       await factory.methods.createCampaign(minContribution).send({ from: accounts[0] });
       router.push("/");
     } catch (err) {
-      setMessage({ header: "Oops", content: err.message, negative: true });
+      setError(err.message);
     }
     setIsLoading(false);
   };
@@ -48,7 +45,6 @@ const New = () => {
         <Button color="green" type="submit" disabled={isLoading} loading={isLoading}>
           Create
         </Button>
-        {message && <Message {...message} />}
       </Form>
     </div>
   );
