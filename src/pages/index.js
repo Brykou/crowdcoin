@@ -13,7 +13,7 @@ const Home = ({ campaigns }) => {
           <Card.Content>
             <Card.Header>{campaign}</Card.Header>
             <Card.Description>
-              <Link href="/">
+              <Link href="/campaigns/[slug]" as={`/campaigns/${campaign}`}>
                 <a>{campaign}</a>
               </Link>
             </Card.Description>
