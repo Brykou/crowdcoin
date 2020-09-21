@@ -1,12 +1,31 @@
 import React from "react";
 import PropTypes from "prop-types";
+import Link from "next/link";
+import { Card, Button, Icon, Header } from "semantic-ui-react";
 import factory from "../util/factory";
 
 const Home = ({ campaigns }) => {
   return (
     <div>
-      <h1>Campaigns</h1>
-      <p>{campaigns}</p>
+      <Header as="h1">Campaigns</Header>
+      {campaigns.map((campaign) => (
+        <Card key={campaign} fluid>
+          <Card.Content>
+            <Card.Header>{campaign}</Card.Header>
+            <Card.Description>
+              <Link href="/">
+                <a>{campaign}</a>
+              </Link>
+            </Card.Description>
+          </Card.Content>
+        </Card>
+      ))}
+      <Link href="/campaigns/new">
+        <Button primary icon labelPosition="left">
+          Create Campaign
+          <Icon name="add circle" />
+        </Button>
+      </Link>
     </div>
   );
 };
