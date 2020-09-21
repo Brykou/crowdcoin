@@ -38,7 +38,8 @@ export async function getServerSideProps() {
 }
 
 Home.propTypes = {
-  campaigns: PropTypes.array.isRequired,
+  /* Array of campaigns addresses */
+  campaigns: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
 export default Home;

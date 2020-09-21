@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 const path = require("path");
 const solc = require("solc");
 const fs = require("fs-extra");
@@ -30,7 +31,14 @@ const input = {
 };
 
 // Compile and write
-const contracts = JSON.parse(solc.compile(JSON.stringify(input))).contracts[FILE];
-Object.keys(contracts).forEach((contract) => {
-  fs.outputJsonSync(path.resolve(buildPath, `${contract}.json`), contracts[contract]);
-});
+const compiledOutput = JSON.parse(solc.compile(JSON.stringify(input)));
+
+if (compiledOutput.errors) {
+  compiledOutput.errors.forEach((error) => console.error(error.formattedMessage));
+  process.exit(1);
+} else {
+  const contracts = compiledOutput.contracts[FILE];
+  Object.keys(contracts).forEach((contract) => {
+    fs.outputJsonSync(path.resolve(buildPath, `${contract}.json`), contracts[contract]);
+  });
+}

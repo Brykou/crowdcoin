@@ -16,6 +16,7 @@ const deploy = async () => {
     .send({ from: accounts[0], gas: 1000000 });
 
   console.info(`Deployed to ${result.options.address}`);
+  process.exit(0);
 };
 
 deploy();

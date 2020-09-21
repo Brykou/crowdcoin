@@ -6,7 +6,7 @@ import web3 from "../../util/web3";
 
 const New = () => {
   const [minContribution, setMinContribution] = useState("100");
-  const [message, setMessage] = useState(null); // {content, type}
+  const [message, setMessage] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
