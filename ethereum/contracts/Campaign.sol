@@ -1,6 +1,9 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.6.0;
 
+/** Campaign Factory
+ *  Create new campaigns
+ */
 contract CampaignFactory {
     Campaign[] deployedCampaigns;
 
@@ -14,6 +17,11 @@ contract CampaignFactory {
     }
 }
 
+/** Campaign
+ *  A campaign can be funded by users.
+ *  The owner can request to withdraw funds.
+ *  At least 50% of funders need to approve a request for it to be valid.
+ */
 contract Campaign {
     struct Request {
         string description;
@@ -43,6 +51,7 @@ contract Campaign {
 
     function contribute() public payable {
         require(msg.value >= minimumContribution);
+        require(!approvers[msg.sender]);
         approvers[msg.sender] = true;
         approversCount++;
     }
