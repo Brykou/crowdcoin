@@ -8,9 +8,10 @@ const NotificationProvider = ({ children }) => {
 
   const methods = useMemo(
     () => ({
-      setSuccess: (message) => setNotification({ content: message, positive: true, icon: "check circle" }),
+      setSuccess: (message) => setNotification({ content: message, positive: true, icon: "check circle outline" }),
       setInfo: (message) => setNotification({ content: message, info: true, icon: "info circle" }),
-      setError: (message) => setNotification({ content: message, negative: true, icon: "exclamation circle" }),
+      setWarning: (message) => setNotification({ content: message, warning: true, icon: "warning circle" }),
+      setError: (message) => setNotification({ content: message, negative: true, icon: "remove circle" }),
       dismissNotification: () => setNotification(null),
     }),
     []
