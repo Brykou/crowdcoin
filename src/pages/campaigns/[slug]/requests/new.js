@@ -73,6 +73,7 @@ export async function getServerSideProps(ctx) {
 
   return {
     props: {
+      /* Address of the campaign */
       address: slug,
     },
   };

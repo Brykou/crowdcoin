@@ -68,16 +68,17 @@ const Requests = ({ address, requests, approversCount }) => {
           {requests.map((request, index) => {
             const readyToFinalize = request.approvalCount >= approversCount / 2;
             return (
-              <Table.Row
-                key={request.description}
-                positive={!request.isCompleted && readyToFinalize}
-                disabled={request.isCompleted}
-              >
+              <Table.Row key={request.description} disabled={request.isCompleted}>
                 <Table.Cell>{index}</Table.Cell>
                 <Table.Cell>{request.description}</Table.Cell>
                 <Table.Cell>{web3.utils.fromWei(request.value, "ether")}</Table.Cell>
                 <Table.Cell>{request.recipient}</Table.Cell>
-                <Table.Cell>{`${request.approvalCount}/${approversCount}`}</Table.Cell>
+                <Table.Cell
+                  positive={!request.isCompleted && readyToFinalize}
+                  negative={!request.isCompleted && !readyToFinalize}
+                >
+                  {`${request.approvalCount}/${approversCount}`}
+                </Table.Cell>
                 <Table.Cell>
                   {!request.isCompleted && (
                     <Button basic color="green" onClick={() => onApprove(index)}>
@@ -123,8 +124,11 @@ export async function getServerSideProps(ctx) {
 
   return {
     props: {
+      /* Address of the campaign */
       address: slug,
+      /* List of requests */
       requests,
+      /* Number of contributors (a.k.a approvers) */
       approversCount,
     },
   };

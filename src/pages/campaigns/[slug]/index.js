@@ -9,10 +9,13 @@ import web3 from "../../../util/web3";
 const Campaign = ({ campaign, address }) => {
   return (
     <div>
-      <Header as="h1">{`Campaign ${address}`}</Header>
-      <Grid>
+      <Header as="h1">Campaign</Header>
+      <Header as="h2" size="small" style={{ overflowWrap: "break-word" }}>
+        {address}
+      </Header>
+      <Grid stackable>
         <Grid.Row>
-          <Grid.Column width={10}>
+          <Grid.Column width={12}>
             <Card.Group>
               <Card
                 header={campaign.manager}
@@ -42,14 +45,16 @@ const Campaign = ({ campaign, address }) => {
               />
             </Card.Group>
           </Grid.Column>
-          <Grid.Column width={6}>
+          <Grid.Column width={4}>
             <Contribute address={address} />
           </Grid.Column>
         </Grid.Row>
         <Grid.Row>
           <Grid.Column>
             <Link href="/campaigns/[slug]/requests" as={`/campaigns/${address}/requests`} passHref>
-              <Button>See requests</Button>
+              <Button fluid primary basic>
+                See requests
+              </Button>
             </Link>
           </Grid.Column>
         </Grid.Row>
@@ -65,6 +70,7 @@ export async function getServerSideProps(ctx) {
 
   return {
     props: {
+      /* Array of campaigns */
       campaign: {
         minimumContribution: campaign[0],
         balance: campaign[1],
@@ -72,6 +78,7 @@ export async function getServerSideProps(ctx) {
         approversCount: campaign[3],
         manager: campaign[4],
       },
+      /* Address of the campaign */
       address: slug,
     },
   };

@@ -11,7 +11,7 @@ const Home = ({ campaigns }) => {
       {campaigns.map((campaign) => (
         <Card key={campaign} fluid>
           <Card.Content>
-            <Card.Header>{campaign}</Card.Header>
+            <Card.Header style={{ overflowWrap: "break-word" }}>{campaign}</Card.Header>
             <Card.Description>
               <Link href="/campaigns/[slug]" as={`/campaigns/${campaign}`}>
                 <a>View the campaign</a>
