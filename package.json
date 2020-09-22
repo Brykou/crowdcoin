@@ -10,8 +10,7 @@
     "format": "prettier --write src/** ethereum/**/*.js tests/**",
     "compile": "node ./ethereum/compile.js",
     "deploy": "node ./ethereum/deploy.js",
-    "test": "mocha ./tests",
-    "solc": "solcjs --bin --abi -o ethereum/out ethereum/contracts/**"
+    "test": "mocha ./tests"
   },
   "dependencies": {
     "@truffle/hdwallet-provider": "^1.1.0",
