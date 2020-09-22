@@ -14,7 +14,7 @@ const Home = ({ campaigns }) => {
             <Card.Header>{campaign}</Card.Header>
             <Card.Description>
               <Link href="/campaigns/[slug]" as={`/campaigns/${campaign}`}>
-                <a>{campaign}</a>
+                <a>View the campaign</a>
               </Link>
             </Card.Description>
           </Card.Content>

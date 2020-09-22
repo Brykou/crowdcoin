@@ -5,7 +5,7 @@ import factory from "../../util/factory";
 import web3 from "../../util/web3";
 import useNotification from "../../util/notification";
 
-const New = () => {
+const NewCampaign = () => {
   const [minContribution, setMinContribution] = useState("100");
   const [isLoading, setIsLoading] = useState(false);
   const { setInfo, setError, dismissNotification } = useNotification();
@@ -50,4 +50,4 @@ const New = () => {
   );
 };
 
-export default New;
+export default NewCampaign;

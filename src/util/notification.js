@@ -8,6 +8,7 @@ const NotificationProvider = ({ children }) => {
 
   const methods = useMemo(
     () => ({
+      setSuccess: (message) => setNotification({ content: message, positive: true, icon: "check circle" }),
       setInfo: (message) => setNotification({ content: message, info: true, icon: "info circle" }),
       setError: (message) => setNotification({ content: message, negative: true, icon: "exclamation circle" }),
       dismissNotification: () => setNotification(null),
@@ -19,7 +20,7 @@ const NotificationProvider = ({ children }) => {
     <NotificationContext.Provider value={methods}>
       {notification && (
         <Message
-          style={{ position: "fixed", top: "10px", right: "10px", zIndex: 1, width: "auto" }}
+          style={{ position: "fixed", top: "10px", right: "10px", zIndex: 1, width: "auto", overflowWrap: "anywhere" }}
           onDismiss={methods.dismissNotification}
           {...notification}
         />
